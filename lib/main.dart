@@ -17,14 +17,14 @@ void main() async {
   // - WEBSOCKET: Real multiplayer on WiFi (Server running: http://192.168.1.117:3000)
   // - FIREBASE: Cloud multiplayer (requires Firebase setup)
   
-  // 🏠 LOCAL MODE - Offline, aynı telefonda test (APK için)
-  await ServiceLocator.initialize(useWebSocket: false);
+  // 🎮 MULTIPLAYER MODE - Gerçek multiplayer için WebSocket
+  await ServiceLocator.initialize(
+    useWebSocket: true,
+    serverUrl: 'http://192.168.1.117:3000', // ⚠️ Server'ın çalıştığı bilgisayarın IP'si
+  );
   
-  // 🎮 MULTIPLAYER MODE - Server çalışıyor! İki telefonda test için
-  // await ServiceLocator.initialize(
-  //   useWebSocket: true,
-  //   serverUrl: 'http://192.168.1.117:3000', // ✅ Server aktif
-  // );
+  // 🏠 LOCAL MODE - Offline mod (Server olmadan)
+  // await ServiceLocator.initialize(useWebSocket: false);
   
   // Initialize services
   final themeProvider = ThemeProvider();
