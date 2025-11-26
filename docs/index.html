@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vampir vs Köylü - İndir</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .version {
+            background: #f0f0f0;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .info {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .info-item span {
+            margin-left: 8px;
+        }
+        
+        .server-status {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        
+        .server-status.offline {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 10px 0;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🧛🏻‍♂️🧑‍🌾</div>
+        <h1>Vampir vs Köylü</h1>
+        <p class="subtitle">Parti Oyunu - Arkadaşlarınla Oyna!</p>
+        
+        <div class="version">
+            <span>📦 v1.0.0</span>
+            <span style="margin: 0 10px;">•</span>
+            <span id="size">62.6 MB</span>
+        </div>
+        
+        <a href="app-release.apk" class="download-btn" download>
+            📥 APK İndir
+        </a>
+        
+        <div class="server-status" id="server-status">
+            🟢 Server Aktif - Multiplayer Hazır!
+        </div>
+        
+        <div class="info">
+            <div class="info-item">
+                ✅ <span>Ücretsiz & Reklamsız</span>
+            </div>
+            <div class="info-item">
+                🎮 <span>4-10 Oyuncu</span>
+            </div>
+            <div class="info-item">
+                📡 <span>Aynı WiFi'de Oyna</span>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📱 Nasıl Kurulur?</h3>
+            <ol>
+                <li>APK'yı indir</li>
+                <li>"Bilinmeyen kaynaklardan yükleme" iznini ver</li>
+                <li>APK'ya tıkla ve yükle</li>
+                <li>Arkadaşlarına da gönder!</li>
+            </ol>
+        </div>
+        
+        <div class="footer">
+            Son güncelleme: <span id="date"></span>
+        </div>
+    </div>
+    
+    <script>
+        // Tarih
+        const today = new Date();
+        document.getElementById('date').textContent = today.toLocaleDateString('tr-TR');
+        
+        // Server status kontrolü (opsiyonel)
+        async function checkServer() {
+            try {
+                const response = await fetch('http://192.168.1.117:3000', { mode: 'no-cors', timeout: 2000 });
+                document.getElementById('server-status').innerHTML = '🟢 Server Aktif - Multiplayer Hazır!';
+            } catch (e) {
+                document.getElementById('server-status').innerHTML = '🔴 Server Kapalı - Sadece Yerel Mod';
+                document.getElementById('server-status').classList.add('offline');
+            }
+        }
+        
+        // Sayfa yüklenince kontrol et
+        checkServer();
+    </script>
+</body>
+</html>
