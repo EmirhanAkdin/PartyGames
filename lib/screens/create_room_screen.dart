@@ -33,12 +33,7 @@ class _CreateRoomScreenState extends State<CreateRoomScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final userId = _authService.getCurrentUserId();
-      if (userId == null) {
-        _showError('Kimlik doğrulama hatası');
-        setState(() => _isLoading = false);
-        return;
-      }
+      final userId = await _authService.getOrCreateUserId();
 
       final room = await ServiceLocator.repository.createRoom(
         roomName: _roomNameController.text.trim(),
